@@ -1,0 +1,38 @@
+BoosterX 4.9.2 — C# / .NET 10 Windows Forms / Form1
+
+WINDOWS SOURCE START
+Extract the source ZIP. Open the BoosterX folder containing BoosterX.csproj.
+dotnet run
+
+PORTABLE START
+Extract the full ZIP. Start Portable/win-x64/BoosterX.exe on Intel/AMD Windows,
+or Portable/win-arm64/BoosterX.exe on ARM64. The runtime is included.
+
+CLEANUP
+Scan cleanup areas automatically checks all 22 fixed catalog areas. There is no
+area selector or expandable checkbox list. Active/unavailable caches are skipped.
+Review the file preview, then delete after confirmation. File ages, locks,
+links, changed files and catalog boundaries are still checked before deletion.
+The read-only Windows Update/BITS idle check from 4.9.1 is retained.
+
+REPAIRS
+The same 28 individual buttons, headings, descriptions and search are retained.
+Page height is measured from actual required content, so an older tall layout
+cannot keep a blank scroll area after resize/search. Text measurements are
+cached until width, DPI or content changes. Details still stack on narrow pages.
+Results appear in Activity/History; servicing is allowed to finish.
+
+34 preferences, installed AppX/Win32/MSI inventory, Startup, Network, Activity,
+History, work percentages and the accepted dark controls/icons are retained.
+Startup: 1280x720 logical pixels, fitted to the monitor work area.
+
+Applying changes requests elevation. Review selections again after restart;
+user settings target the account used for elevation. Publisher uninstallers can
+retain shared files/profiles and show their own prompts. File/app removal and
+Windows maintenance have no BoosterX undo. No performance gain is promised.
+
+CHECKS
+84 pure checks passed. Both portable builds and ZIP integrity/source identity
+were checked. The actual source ZIP was extracted/rebuilt and checked again.
+36 native fixtures and 143 layout cases are prepared; they require Windows and
+were not executed on this Linux build host. See docs/WINDOWS-TESTING.md.

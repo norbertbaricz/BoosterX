@@ -1,0 +1,12 @@
+{
+  "TempMinimumAgeDays": 7,
+  "MaxScannedFiles": 100000,
+  "MaxScanSeconds": 90,
+  "MenuDelayMilliseconds": 100,
+  "NativeCommandTimeoutSeconds": 120,
+  "ServiceTimeoutSeconds": 30,
+  "PingTimeoutMilliseconds": 1500,
+  "PingSamples": 4,
+  "MaxLogCharacters": 160000,
+  "AutomaticRestorePoint": true
+}

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <RootNamespace>BoosterX.App</RootNamespace>
+    <AssemblyName>BoosterX</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <ApplicationDefaultFont>Segoe UI, 10pt</ApplicationDefaultFont>
+    <ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <PublishTrimmed>false</PublishTrimmed>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs;Theme.cs;UiModels.cs;GlobalUsings.cs;Controls/**/*.cs;Services/**/*.cs" />
+    <Compile Include="Form1.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="Form1.Layout.cs"><DependentUpon>Form1.cs</DependentUpon></Compile>
+    <Compile Include="Form1.Icons.cs"><DependentUpon>Form1.cs</DependentUpon></Compile>
+    <Compile Include="Form1.Features.cs"><DependentUpon>Form1.cs</DependentUpon></Compile>
+    <Compile Include="Form1.Maintenance.cs"><DependentUpon>Form1.cs</DependentUpon></Compile>
+    <Compile Include="Form1.Designer.cs"><DependentUpon>Form1.cs</DependentUpon></Compile>
+    <EmbeddedResource Include="app.ico"><LogicalName>BoosterX.App.Icon</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="assets/boosterx-mark.png"><LogicalName>BoosterX.App.Brand</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx"><DependentUpon>Form1.cs</DependentUpon></EmbeddedResource>
+    <ProjectReference Include="src/BoosterX.Core/BoosterX.Core.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>BoosterX acceleration mark</title>
+  <rect x="0" y="0" width="128" height="128" rx="28" fill="#1e2127"/>
+  <path d="M28 32 60 64 28 96H43L75 64 43 32Z" fill="#f5f6f8"/>
+  <path d="M52 32 84 64 52 96H67L99 64 67 32Z" fill="#e24459"/>
+</svg>

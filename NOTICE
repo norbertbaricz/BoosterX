@@ -1,0 +1,11 @@
+BoosterX — Windows Forms Edition, version 4.9.2
+Original project attribution: Skypixel team.
+
+The original Apache License 2.0 text is preserved in LICENSE.
+This distribution provides a C#/.NET Windows Forms implementation, selective
+optimization and cleanup, AppX/startup management, network diagnostics,
+Windows repairs, durable setting backups and verification tools.
+
+Published self-contained executables include Microsoft .NET, Windows Forms
+and Windows SDK projection components. Runtime license and notice files are
+provided alongside the executables in full Portable releases.

@@ -1,0 +1,85 @@
+PASS Original value is durable before mutation
+PASS Failed capture prevents modification
+PASS Failed journal write prevents modification
+PASS Partial change rolls back after failure
+PASS Failed rollback blocks further modifications
+PASS Interrupted applying record is recoverable
+PASS Restore runs in reverse action order
+PASS Batches restore newest first
+PASS Clock changes cannot reorder setting restoration
+PASS Foreign machine and account cannot restore
+PASS Stop finishes the current action and skips the rest
+PASS Irreversible operations are not offered as restorable
+PASS Failed restore preserves order and can be retried
+PASS Duplicate action IDs are rejected
+PASS Corrupt journals are reported
+PASS Journal identifiers cannot traverse paths
+PASS Clean scan respects ages, read-only files and root containment
+PASS Clean scan skips directory and file links
+PASS Clean scan bounds total entries
+PASS Cancelled scan stops before returning candidates
+PASS Invalid configuration is rejected
+PASS Configuration values round-trip
+PASS Color contrast calculation matches black/white reference
+PASS Text remains readable on enabled, selected and disabled surfaces
+PASS Scrollbar endpoints and content fit never divide by zero
+PASS Scrollbar mapping is monotonic and clamps dragged positions
+PASS Scrollbar math handles maximum-size extents without overflow
+PASS Window hit testing recognizes all corners and outside points
+PASS Dragging left and top keeps the opposite corner fixed
+PASS Every resize direction enforces the minimum window size
+PASS Unequal percent rows each retain their minimum usable height
+PASS Percent row allocation is independent of weight normalization
+PASS Percent layout rounds upward so the smallest row never clips
+PASS Percent extent handles empty, invalid and huge constraints
+PASS Default launch is centered at 1280x720 on a roomy screen
+PASS Small screens and taskbars constrain startup bounds
+PASS Resolution and DPI matrix stays inside the work area
+PASS Negative-coordinate monitors preserve their own bounds
+PASS Monitor changes clamp without resetting valid user sizes
+PASS Sidebar widens normally and yields to the compact menu
+PASS Layout breakpoints preserve logical behavior across DPI
+PASS Focus reveal brings small actions into the viewport
+PASS Focus reveal preserves useful positions inside large viewers
+PASS Header reserves both full action buttons on a roomy screen
+PASS Header stacks the complete toolbar before it can clip
+PASS Oversized toolbars yield to the command menu
+PASS Header sizing survives resize cycles across DPI
+PASS Icon and text form one aligned group with a real gap
+PASS Icon and text remain bounded in tiny controls
+PASS Icon preferred sizes reserve the icon at every DPI
+PASS Every action icon has valid font-independent vector geometry
+PASS Fine wheel deltas accumulate without disappearing
+PASS Wheel input respects disabled, line and page settings
+PASS Nested scrolling yields only at the requested edge
+PASS Changing wheel axes cannot reuse a partial vertical notch
+PASS Extreme wheel values clamp without arithmetic overflow
+PASS Dropdown placement fits above or below within each monitor
+PASS Dropdown hit testing includes its scrolled offset
+PASS Variable grid row heights retain access to the final row
+PASS Grid scrolling maps only eligible rows and clamps extremes
+PASS Expanded preferences retain original IDs and opt-in defaults
+PASS Expanded registry targets are unique and typed
+PASS Configured menu delay is resolved without changing other values
+PASS Repair inventory uses fixed supported command arguments
+PASS System drive substitution rejects injected command arguments
+PASS Quoted and unquoted publisher commands preserve their arguments
+PASS Publisher commands reject shell hosts and remote/relative executables
+PASS Application inventory protects shared and system components
+PASS Progress combines completed actions and command fractions
+PASS Unknown or completed progress never invents a timed estimate
+PASS Command percentages parse invariantly and reject invalid numbers
+PASS Cache scanning honors the selected file allowlist
+PASS Cache scanning reports real visited and eligible counts
+PASS History inspection keeps valid runs and reports corrupt files
+PASS History inspection does not bypass the mutation guard
+PASS Incomplete journal entries are rejected before restoration
+PASS Idle cleanup queries both Windows Update and BITS without the mutation allowlist
+PASS Running, paused and pending update services exclude their cache
+PASS Unavailable service state skips update cache instead of failing cleanup
+PASS Pending restart excludes update cache and unrelated areas do not query services
+PASS Unknown cleanup service names are rejected before native queries
+PASS Maintenance rows keep full actions and descriptions separate across DPI
+PASS Narrow maintenance rows stack details without losing text height
+PASS Maintenance fine scrolling advances less than one action row
+84/84 checks passed.

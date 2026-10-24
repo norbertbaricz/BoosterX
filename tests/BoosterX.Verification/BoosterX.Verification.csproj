@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Controls/UiPalette.cs" Link="UiPalette.cs" />
+    <Compile Include="../../Controls/UiGeometry.cs" Link="UiGeometry.cs" />
+    <Compile Include="../../Controls/ResponsiveGeometry.cs" Link="ResponsiveGeometry.cs" />
+    <Compile Include="../../Controls/IconGeometry.cs" Link="IconGeometry.cs" />
+    <Compile Include="../../Controls/UiIcon.cs" Link="UiIcon.cs" />
+    <Compile Include="../../Controls/ScrollInputGeometry.cs" Link="ScrollInputGeometry.cs" />
+    <Compile Include="../../Controls/DetailListGeometry.cs" Link="DetailListGeometry.cs" />
+    <ProjectReference Include="../../src/BoosterX.Core/BoosterX.Core.csproj" />
+  </ItemGroup>
+</Project>
