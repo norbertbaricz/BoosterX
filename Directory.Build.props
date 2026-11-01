@@ -6,7 +6,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Deterministic>true</Deterministic>
     <DebugType>embedded</DebugType>
-    <Version>4.9.4</Version>
+    <Version>4.9.5</Version>
     <Authors>Skypixel team</Authors>
     <Copyright>BoosterX contributors</Copyright>
   </PropertyGroup>

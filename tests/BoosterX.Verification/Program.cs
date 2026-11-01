@@ -90,7 +90,12 @@ var checks = new (string Name, Func<Task> Run)[]
     ("Unknown cleanup service names are rejected before native queries", CleanupServiceNames),
     ("Maintenance rows keep full actions and descriptions separate across DPI", MaintenanceRowBounds),
     ("Narrow maintenance rows stack details without losing text height", MaintenanceStackedRows),
-    ("Maintenance fine scrolling advances less than one action row", MaintenanceWheelStep)
+    ("Maintenance fine scrolling advances less than one action row", MaintenanceWheelStep),
+    ("Window X hides idle and active work when a tray icon exists", TrayWindowClose),
+    ("Explicit idle Quit closes instead of hiding", TrayIdleQuit),
+    ("Busy Quit waits until the current action becomes idle", TrayBusyQuit),
+    ("System/application shutdown is never redirected to the tray", TraySystemShutdown),
+    ("An unavailable tray cannot leave an invisible application", TrayUnavailable)
 };
 foreach (var check in checks)
 {
@@ -405,6 +410,31 @@ static Task IconVectorDefinitions() => Sync(() =>
             else Assert(shape.Points.Length >= 4 && shape.Points.Length % 2 == 0);
         }
     }
+});
+
+static Task TrayWindowClose() => Sync(() =>
+{
+    foreach (bool active in new[] { false,true }) Assert(TrayClosePolicy.Decide(true,false,active,true) == TrayCloseDecision.Hide);
+});
+static Task TrayIdleQuit() => Sync(() =>
+{
+    foreach (bool tray in new[] { false,true }) Assert(TrayClosePolicy.Decide(true,true,false,tray) == TrayCloseDecision.Close);
+});
+static Task TrayBusyQuit() => Sync(() =>
+{
+    Assert(TrayClosePolicy.Decide(true,true,true,true) == TrayCloseDecision.WaitForCurrentAction);
+    Assert(TrayClosePolicy.Decide(true,true,false,true) == TrayCloseDecision.Close);
+});
+static Task TraySystemShutdown() => Sync(() =>
+{
+    foreach (bool active in new[] { false,true })
+    foreach (bool quitting in new[] { false,true })
+    foreach (bool tray in new[] { false,true }) Assert(TrayClosePolicy.Decide(false,quitting,active,tray) == TrayCloseDecision.Close);
+});
+static Task TrayUnavailable() => Sync(() =>
+{
+    Assert(TrayClosePolicy.Decide(true,false,false,false) == TrayCloseDecision.Close);
+    Assert(TrayClosePolicy.Decide(true,false,true,false) == TrayCloseDecision.WaitForCurrentAction);
 });
 
 static Task CleanupIdleServices() => Sync(() =>

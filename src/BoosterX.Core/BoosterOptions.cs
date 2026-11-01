@@ -5,7 +5,7 @@ namespace BoosterX.Core;
 /// <summary>All easy-to-tune defaults live here. No arbitrary cleanup paths or shell commands.</summary>
 public sealed class BoosterOptions
 {
-    public const string ProductVersion = "4.9.4";
+    public const string ProductVersion = "4.9.5";
     public const int DefaultTempMinimumAgeDays = 7;       // Protect recently created/modified temporary files.
     public const int DefaultMaxScannedFiles = 100_000;    // Bound a scan on very large temporary trees.
     public const int DefaultMaxScanSeconds = 90;         // Keep scans bounded, including deep empty trees.

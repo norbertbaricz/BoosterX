@@ -1,4 +1,4 @@
-BoosterX 4.9.4 — C# / .NET 10 Windows Forms / Form1
+BoosterX 4.9.5 — C# / .NET 10 Windows Forms / Form1
 
 WINDOWS SOURCE START
 Extract the source ZIP. Open the BoosterX folder containing BoosterX.csproj.
@@ -7,6 +7,13 @@ dotnet run
 PORTABLE START
 Extract the full ZIP. Start Portable/win-x64/BoosterX.exe on Intel/AMD Windows,
 or Portable/win-arm64/BoosterX.exe on ARM64. The runtime is included.
+
+WINDOW / BACKGROUND
+X or Alt+F4 hides the app to the notification area; active work continues.
+Left-click the icon or choose Open BoosterX/Open Activity to restore the window.
+Right-click -> Quit exits completely. During work it waits for the current action
+and skips remaining actions, using the existing Stop behavior. The tray icon
+stays available even when pop-up desktop notifications are disabled.
 
 FOOTER
 The rounded progress panel fills the footer space beside Stop after current
@@ -40,7 +47,7 @@ retain shared files/profiles and show their own prompts. File/app removal and
 Windows maintenance have no BoosterX undo. No performance gain is promised.
 
 CHECKS
-84 pure checks passed. Both portable builds and ZIP integrity/source identity
+89 pure checks passed. Both portable builds and ZIP integrity/source identity
 were checked. The actual source ZIP was extracted/rebuilt and checked again.
 36 native fixtures and 143 layout cases are prepared; they require Windows and
 were not executed on this Linux build host. See docs/WINDOWS-TESTING.md.

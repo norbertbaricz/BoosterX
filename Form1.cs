@@ -81,7 +81,8 @@ public partial class Form1 : DarkForm
         };
         help.SetToolTip(minimizeWindowButton, "Minimize window");
         help.SetToolTip(maximizeWindowButton, "Maximize or restore window");
-        help.SetToolTip(closeWindowButton, "Close BoosterX");
+        help.SetToolTip(closeWindowButton, "Hide BoosterX to the notification area");
+        closeWindowButton.AccessibleName = "Hide to notification area";
     }
 
     public Form1(BoosterOptions options, string dataDirectory) : this()
@@ -113,7 +114,7 @@ public partial class Form1 : DarkForm
         catch (Exception ex)
         {
             DarkDialog.Show(this, ex.Message, "BoosterX startup", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Close();
+            CloseForExit();
         }
     }
 
@@ -225,19 +226,19 @@ public partial class Form1 : DarkForm
 
     private async Task GuardAsync(Func<Task> action)
     {
-        if (!runtimeReady || busy) return;
+        if (!runtimeReady || busy || exitRequested) return;
         try { await action(); }
         catch (Exception ex)
         {
             WriteActivity(ex.ToString(), ActivityLevel.Error);
             SetStatus(ex.Message);
-            DarkDialog.Show(this, ex.Message, "BoosterX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            ShowErrorOrNotify(ex.Message,"BoosterX");
         }
     }
 
     private async Task<bool> RunBusyAsync(string title, Func<CancellationToken, Task<string>> action, bool notify = true)
     {
-        if (busy) return false;
+        if (busy || exitRequested) return false;
         busy = true;
         Interlocked.Increment(ref operationGeneration); workProgress.Reset(); RefreshProgressDisplay();
         operationOutcome = ActivityLevel.Success;
@@ -271,8 +272,12 @@ public partial class Form1 : DarkForm
             WriteActivity(ex.ToString(), ActivityLevel.Error); SetStatus("Action failed. Review History and the activity log.");
             if (notify) NotifyDesktop(title, "Action failed. Open Activity for details.", ToolTipIcon.Error);
             FlushLog();
-            ShowPage(activityPage, activityNavButton);
-            DarkDialog.Show(this, ex.Message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (!hiddenByTray && !quitWhenIdle)
+            {
+                ShowPage(activityPage, activityNavButton);
+                DarkDialog.Show(this, ex.Message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (!notify) NotifyDesktop(title, "Action failed. Open Activity for details.", ToolTipIcon.Error);
             return false;
         }
         finally
@@ -283,6 +288,7 @@ public partial class Form1 : DarkForm
             busy = false;
             workProgress.Reset(); RefreshProgressDisplay();
             try { RefreshHistory(); } catch (Exception ex) { WriteLog("History could not be read: " + ex.Message); }
+            TryCloseAfterOperation();
         }
     }
 
@@ -315,6 +321,7 @@ public partial class Form1 : DarkForm
     protected override void OnResize(EventArgs e)
     {
         base.OnResize(e);
+        if (!hiddenByTray && WindowState != FormWindowState.Minimized) trayRestoreState = WindowState;
         UpdateResponsiveWindowState();
         if (maximizeWindowButton != null)
         {
@@ -336,7 +343,7 @@ public partial class Form1 : DarkForm
     private void RestartElevated()
     {
         if (busy || ElevationService.IsAdministrator) return;
-        if (ElevationService.TryRestart()) Close();
+        if (ElevationService.TryRestart()) CloseForExit();
         else { SetStatus("Elevation cancelled. No changes were applied."); WriteLog("Elevation cancelled."); }
     }
 
@@ -485,7 +492,7 @@ public partial class Form1 : DarkForm
         {
             activityCharacters -= activityEntries[0].Details.Length; activityEntries.RemoveAt(0);
         }
-        if (changed) RefreshActivityView();
+        if (changed && !hiddenByTray) RefreshActivityView();
     }
     private void RefreshActivityView()
     {
@@ -524,24 +531,6 @@ public partial class Form1 : DarkForm
             ? $"{entry.At.ToLocalTime():yyyy-MM-dd HH:mm:ss}  |  {entry.Status}\n\n{entry.Details}"
             : "Select an event to read its complete details.";
     }
-    private void InitializeDesktopNotifications()
-    {
-        desktopMenu = new ContextMenuStrip { Renderer = new DarkMenuRenderer(), BackColor = UiPalette.Surface, ForeColor = UiPalette.Text, ShowImageMargin = true };
-        UiIcons.AddMenuItem(desktopMenu.Items, "Open BoosterX", UiIcon.Dashboard, (_, _) => RestoreFromTray());
-        UiIcons.AddMenuItem(desktopMenu.Items, "Open Activity", UiIcon.Activity, (_, _) => { RestoreFromTray(); ShowPage(activityPage, activityNavButton); });
-        desktopMenu.Items.Add(new ToolStripSeparator());
-        UiIcons.AddMenuItem(desktopMenu.Items, "Exit", UiIcon.Error, (_, _) => Close());
-        desktopIcon = new NotifyIcon { Icon = ownedIcon, Text = "BoosterX", ContextMenuStrip = desktopMenu,
-            Visible = uiPreferences.DesktopNotifications };
-        desktopIcon.DoubleClick += (_, _) => RestoreFromTray();
-        desktopIcon.BalloonTipClicked += (_, _) => { RestoreFromTray(); ShowPage(activityPage, activityNavButton); };
-    }
-    private void RestoreFromTray()
-    {
-        Show();
-        if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
-        Activate();
-    }
     private void NotifyDesktop(string title, string text, ToolTipIcon icon, bool force = false)
     {
         if (desktopIcon == null || !uiPreferences.DesktopNotifications) return;
@@ -562,7 +551,7 @@ public partial class Form1 : DarkForm
         catch (Exception ex)
         {
             WriteActivity(ex.ToString(), ActivityLevel.Error);
-            DarkDialog.Show(this, ex.Message, "BoosterX", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            ShowErrorOrNotify(ex.Message,"BoosterX");
         }
     }
     private void ActivityFilterChanged(object? sender, EventArgs e) { if (activityGrid != null) RefreshActivityView(); }
@@ -581,7 +570,6 @@ public partial class Form1 : DarkForm
         uiPreferences.FollowActivity = followActivityCheckBox.Checked;
         uiPreferences.DesktopNotifications = notificationsCheckBox.Checked;
         uiPreferences.NotifyInForeground = foregroundNotificationsCheckBox.Checked;
-        if (desktopIcon != null) desktopIcon.Visible = uiPreferences.DesktopNotifications;
         uiPreferences.Save(dataDirectory); RefreshActivityView();
         return Task.CompletedTask;
     });
@@ -629,15 +617,6 @@ public partial class Form1 : DarkForm
         e.ThrowException = false;
         WriteLog("Grid edit failed: " + (e.Exception?.Message ?? "Unknown edit error."));
         SetStatus("Selection could not be updated. Refresh the list before applying changes.");
-    }
-    protected override void OnFormClosing(FormClosingEventArgs e)
-    {
-        if (busy)
-        {
-            e.Cancel = true;
-            DarkDialog.Show(this, "Wait for the current action to finish. Stop after current action skips remaining changes without killing Windows servicing.", "BoosterX");
-        }
-        base.OnFormClosing(e);
     }
     protected override void OnFormClosed(FormClosedEventArgs e)
     {

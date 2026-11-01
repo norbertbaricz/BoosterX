@@ -82,4 +82,9 @@ PASS Unknown cleanup service names are rejected before native queries
 PASS Maintenance rows keep full actions and descriptions separate across DPI
 PASS Narrow maintenance rows stack details without losing text height
 PASS Maintenance fine scrolling advances less than one action row
-84/84 checks passed.
+PASS Window X hides idle and active work when a tray icon exists
+PASS Explicit idle Quit closes instead of hiding
+PASS Busy Quit waits until the current action becomes idle
+PASS System/application shutdown is never redirected to the tray
+PASS An unavailable tray cannot leave an invisible application
+89/89 checks passed.

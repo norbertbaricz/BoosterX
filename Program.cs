@@ -23,7 +23,7 @@ internal static class Program
             using var mutex = new Mutex(true, @"Global\BoosterX-Optimizer-v4", out bool created);
             if (!created)
             {
-                DarkDialog.Show("BoosterX is already running on this PC.", "BoosterX");
+                DarkDialog.Show("BoosterX is already running on this PC. Use its notification-area icon to reopen the window.", "BoosterX");
                 return 1;
             }
             try

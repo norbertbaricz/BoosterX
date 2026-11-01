@@ -459,7 +459,7 @@ partial class Form1
         versionLabel.TabIndex = 17;
         versionLabel.AutoSize = true;
         versionLabel.Dock = DockStyle.None;
-        versionLabel.Text = "4.9.4 · Portable edition\n" + UiLayout.AttributionText;
+        versionLabel.Text = "4.9.5 · Portable edition\n" + UiLayout.AttributionText;
         versionLabel.Margin = new Padding(0, 14, 0, 0);
         versionLabel.UseMnemonic = false;
         versionLabel.MaximumSize = new Size(156, 0);

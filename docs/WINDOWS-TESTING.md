@@ -1,4 +1,4 @@
-# Native Windows acceptance for BoosterX 4.9.4
+# Native Windows acceptance for BoosterX 4.9.5
 
 Use isolated Windows 10 (19041+) and Windows 11 installations. Record OS build,
 architecture, user/admin identity, work area, DPI, result and restore outcome.
@@ -13,7 +13,7 @@ dotnet run -- --self-check
 dotnet run -- --ui-check
 ```
 
-84 pure checks are platform-independent. 36 actual-control fixtures require
+89 pure checks are platform-independent. 36 actual-control fixtures require
 Windows. --self-check reads native state and changes only owned temporary-file
 fixtures. --ui-check uses fixture data and applies no optimization/uninstall.
 It prepares nine pages at 13 monitor-constrained sizes plus filtered and empty
@@ -169,3 +169,27 @@ $result.ExitCode
   bounds/insets/full width/centers. It also checks Made by Skypixel Framework.
 - No permanent status label may return. Hover progress for the latest status;
   the existing logs/results and Stop behavior must remain available.
+
+## Tray lifetime acceptance
+
+- X/Alt+F4/window Close must hide the same process, remove its taskbar window and
+  keep a usable icon in the notification area. Test idle and active operations;
+  X must not cancel a running batch. Check selections and reports after restore.
+- Restore through single left click, Open BoosterX and Open Activity; test normal,
+  minimized and maximized windows, multiple monitors and changed monitor bounds.
+- Disable Desktop notifications, hide, then restore/quit through the icon. The
+  checkbox must control popups without stranding a hidden application.
+- Idle Quit must remove the icon and terminate the process. Busy Quit must cancel
+  only through existing cooperative stop rules, wait for the current action,
+  skip remaining steps, flush results and then exit. Try restoring/hiding while
+  waiting; no new Windows action may start after Quit has been requested.
+- Check background errors are recorded/notified without a modal hidden owner.
+  Activity should refresh once on restore; raw logs must remain complete.
+- Check administrator restart exits the old instance and starts the elevated
+  one, fatal startup exits instead of hiding, and shutdown is not redirected to
+  the tray. Actual forced process termination remains an OS operation.
+- --ui-check also creates a separate disposable tray fixture. It exercises idle
+  hide, maximized restore, busy hide without cancellation, cooperative menu Quit
+  and icon/resource disposal after work becomes idle. It performs no Windows
+  optimization/uninstall and its temporary icon is removed at the end. These
+  five lifecycle scenarios are compiled, not executed on the Linux build host.

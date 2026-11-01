@@ -24,6 +24,7 @@ internal static class UiSelfCheck
                 Directory.CreateDirectory(directory);
                 form.PrepareLayoutCheck();
                 failures.AddRange(form.VerifyFeatureFixtures());
+                failures.AddRange(Form1.VerifyTrayLifecycleFixtures());
                 failures.AddRange(ControlRenderingChecks.Run(form.Font, directory).Where(r => !r.Passed).Select(r => r.Name + ": " + r.Details));
                 failures.AddRange(InteractionChecks.Run(form.Font, directory).Where(r => !r.Passed).Select(r => r.Name + ": " + r.Details));
                 failures.AddRange(CheckBorderlessButtons(form.Font));

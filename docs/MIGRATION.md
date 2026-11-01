@@ -1,4 +1,4 @@
-# BoosterX 4.9.4 migration
+# BoosterX 4.9.5 migration
 
 Existing 4.x data directory, settings fields, journal format 1, stable optimization
 IDs and reverse restoration order remain. Startup handling and the accepted
@@ -15,7 +15,7 @@ still root Form1 with normal `dotnet run` and x64/ARM64 portable profiles.
 | Progress | OperationProgress, action counts and native percentage; retained terminal state; unknown phases animate |
 | History | Inspect reports partial inventory/errors; strict List/engine guards retained; typed restore verification |
 | UI | Form1.Maintenance.cs removes cleanup selection controls; DetailListPanel caches repair rows; DarkScrollPanel measures natural height |
-| Validation | 84 pure checks; 36 prepared native fixtures; 143 prepared page/size cases |
+| Validation | 89 pure checks; 36 prepared native fixtures; 143 prepared page/size cases |
 
 Original recommended preferences remain selected. Cleanup includes all 22 areas
 for automatic scanning; area customization is removed, while file preview and confirmation remain. No repair or
@@ -55,3 +55,13 @@ engine/journal records remain. Sidebar attribution is a UiLayout constant.
 Native check mode can exercise four isolated footer states without Windows
 optimization operations. OperationProgress itself and native command handling
 are unchanged.
+
+In 4.9.5 Form1.Tray.cs owns close-to-tray, restore and actual exit intent. A new
+pure TrayClosePolicy separates user close, explicit exit, busy state and missing
+tray fallback. Five platform-independent regressions cover these decisions.
+
+NotifyIcon visibility no longer follows the popup-notification checkbox. Existing
+UI preference files remain valid; no Windows autorun entry is added. Programmatic
+startup-failure/elevation paths explicitly close, while ordinary X cancels form
+closing and posts hiding after dispatch. Quit is posted from the context menu;
+busy Quit cancels the batch cooperatively and posts closing after RunBusy finally.

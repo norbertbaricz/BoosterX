@@ -1,16 +1,16 @@
 {
   "product": "BoosterX",
-  "version": "4.9.4",
-  "built_utc": "2026-11-01T08:22:19.527714+00:00",
-  "ui": "Windows Forms; progress fills available footer width beside Stop, empty idle 0%, symmetric insets and Skypixel Framework attribution",
+  "version": "4.9.5",
+  "built_utc": "2026-11-01T09:01:51.515978+00:00",
+  "ui": "Windows Forms; close-to-tray, persistent notification-area icon, same-window restore and cooperative Quit; accepted footer/UI retained",
   "sdk": "10.0.402",
   "runtime": "10.0.13",
   "root_project": "BoosterX.csproj",
   "development_command": "dotnet run",
-  "regression_checks_passed": 84,
-  "regression_checks_total": 84,
+  "regression_checks_passed": 89,
+  "regression_checks_total": 89,
   "original_checks": 84,
-  "new_regression_checks": 0,
+  "new_regression_checks": 5,
   "screen_matrix_cases": 312,
   "native_rendering_checks_prepared": 36,
   "native_layout_cases_prepared": 143,
@@ -36,8 +36,8 @@
   "binaries": [
     {
       "path": "Portable/win-x64/BoosterX.exe",
-      "bytes": 58310992,
-      "sha256": "d2adc9e3754c597359ae42d9c3e82002481cfe14c3aab8266c4ee0251bdb3c2e",
+      "bytes": 58312784,
+      "sha256": "3fb13ffad05342cbe25391fe5c7c1d3ec585440049753ca924539317b708dc57",
       "architecture": "win-x64",
       "single_file": true,
       "self_contained": true,
@@ -46,8 +46,8 @@
     },
     {
       "path": "Portable/win-arm64/BoosterX.exe",
-      "bytes": 57056089,
-      "sha256": "a770e6c33714e7f6a5dde2efd7c44a61560a496633563c6bc444c984618cfa6f",
+      "bytes": 57057966,
+      "sha256": "5e494c06fb7e975dcec25aeb747afa1e7124e20e3e2402bc93ac1f57b14420d0",
       "architecture": "win-arm64",
       "single_file": true,
       "self_contained": true,
@@ -63,5 +63,11 @@
   "footer_idle_value": 0,
   "footer_idle_caption": "0%",
   "footer_state_fixtures": 4,
-  "sidebar_attribution": "Made by Skypixel Framework"
+  "sidebar_attribution": "Made by Skypixel Framework",
+  "close_to_tray": true,
+  "tray_icon_independent_of_popup_preferences": true,
+  "tray_quit_menu_text": "Quit",
+  "busy_quit_waits_for_current_action": true,
+  "native_tray_lifecycle_checks_prepared": 5,
+  "native_tray_lifecycle_checks_executed": false
 }

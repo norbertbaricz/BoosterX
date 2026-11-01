@@ -1,4 +1,4 @@
-# BoosterX 4.9.4 — C# Windows Forms
+# BoosterX 4.9.5 — C# Windows Forms
 
 Portable Windows 10 (build 19041+) / Windows 11 maintenance application, using
 .NET 10, Form1 and the Visual Studio WinForms designer. Product text is English.
@@ -25,7 +25,37 @@ Portable/win-x64/BoosterX.exe or Portable/win-arm64/BoosterX.exe. The source ZIP
 contains the complete project, tests and documentation without the binaries.
 Open Form1.cs -> View Designer in a Visual Studio version supporting .NET 10.
 
-## What changed in 4.9.4
+## What changed in 4.9.5
+
+- Window X/Alt+F4 hides BoosterX to the notification area. The taskbar window
+  disappears while the same process, selections, history and active work remain.
+  Left-click the tray icon or choose Open BoosterX/Open Activity to restore it.
+  Normal/maximized state is preserved and monitor bounds are rechecked.
+- Right-click the icon and choose Quit to exit completely. Idle Quit closes
+  immediately; during work it requests the existing cooperative stop, skips
+  remaining actions and exits after the current action finishes. Windows
+  servicing and publisher uninstallers are not force-killed.
+- The tray icon remains available independently of Desktop notifications, which
+  controls pop-up notifications. Windows controls visible/overflow icon placement.
+- Startup failure, administrator restart and OS/application shutdown use actual
+  close paths. Tray menu Quit and hide operations are deferred out of close/menu
+  dispatch. Resources and the icon are disposed only on real exit.
+- While hidden, logs still drain to bounded storage without rebuilding the hidden
+  Activity grid. Background failures stay in Activity and may notify according to
+  preferences instead of opening a hidden-owner modal dialog.
+
+## Window and tray controls
+
+| Action | Behavior |
+| --- | --- |
+| X, Alt+F4, window Close | Hide to the tray; active work continues |
+| Minimize | Normal taskbar minimization |
+| Left-click tray icon / Open BoosterX | Restore the existing window |
+| Open Activity | Restore and show the activity page |
+| Quit while idle | Full exit and tray-icon cleanup |
+| Quit during work | Stop cooperatively, then full exit |
+
+## Features retained from 4.9.4
 
 - The rounded progress panel fills all available footer width beside Stop.
   Matching outer insets, a fixed percentage column and the same action gap keep
@@ -175,6 +205,7 @@ publisher uninstallers follow their own Windows/publisher UI.
 | --- | --- |
 | Form1.cs / Designer.cs / resx | Existing form, handlers and designer layout |
 | Form1.Features.cs | Preference/app filters, spacing, progress and fixture checks |
+| Form1.Tray.cs / src/BoosterX.Core/TrayClosePolicy.cs | Tray lifetime, restore, cooperative Quit and close intent |
 | Form1.Footer.cs | Stretched progress panel, idle/reset states, measured Stop layout and footer geometry checks |
 | Form1.Maintenance.cs / Controls/DetailListPanel.cs | Fixed all-area cleanup and responsive cached repair buttons |
 | Form1.Layout.cs | Responsive bounds, header/sidebar/footer and DPI |
@@ -197,7 +228,7 @@ dotnet run -- --self-check
 dotnet run -- --ui-check
 ```
 
-The 84 pure checks run on supported .NET hosts. The 36 native rendering/interaction
+The 89 pure checks run on supported .NET hosts. The 36 native rendering/interaction
 fixtures and 143 page/size cases require Windows; they were compiled, not run,
 in the Linux build environment. Native UI checks use fixture controls/data and
 perform no optimizations. Bitmap output captures only fixture controls and can

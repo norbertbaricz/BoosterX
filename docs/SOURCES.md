@@ -20,3 +20,8 @@ Cleanup idle-check references (read-only service query; only STOPPED is idle):
 
 - [QueryServiceStatus and required access](https://learn.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-queryservicestatus)
 - [SERVICE_STATUS values](https://learn.microsoft.com/en-us/windows/win32/api/winsvc/ns-winsvc-service_status)
+
+Notification-area lifetime references:
+
+- [NotifyIcon, context menu and window activation](https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.notifyicon?view=windowsdesktop-10.0)
+- [Form close reasons, user close and application/OS shutdown](https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.closereason?view=windowsdesktop-10.0)

@@ -185,7 +185,7 @@ public partial class Form1
         try
         {
             WriteActivity(exception.ToString(),ActivityLevel.Error); SetStatus("Interface action failed. Open Activity for full details.");
-            DarkDialog.Show(this,exception.Message + "\n\nFull details were recorded in Activity and the session log.","BoosterX interface",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            ShowErrorOrNotify(exception.Message + "\n\nFull details were recorded in Activity and the session log.","BoosterX interface");
         }
         finally { reportingUiException = false; }
     }
