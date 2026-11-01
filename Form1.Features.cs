@@ -16,7 +16,7 @@ public partial class Form1
     private readonly Label preferenceCount = new() { Name = "preferenceCount",AutoSize = true,Tag = "muted" };
     private readonly Label appsCount = new() { Name = "appsCount",AutoSize = true,Tag = "muted" };
     private readonly Label repairCount = new() { Name = "repairCount",AutoSize = true,Tag = "muted" };
-    private readonly Label operationPercentLabel = new() { Name = "operationPercentLabel",AutoSize = true,Text = "0%",TextAlign = ContentAlignment.MiddleRight,Anchor = AnchorStyles.Right };
+    private readonly Label operationPercentLabel = new() { Name = "operationPercentLabel",AutoSize = false,Text = "0%",TextAlign = ContentAlignment.MiddleRight };
     private readonly OperationProgress workProgress = new();
     private readonly object progressLock = new();
     private double latestNativePercent;
@@ -67,10 +67,7 @@ public partial class Form1
         }
         RefreshPreferenceFilter(); RefreshRepairFilter();
         historyGrid.Columns.Add(TextColumn("historyIdentity","Backup scope","Scope",155));
-        footerLayout.ColumnCount = 3; footerLayout.ColumnStyles.Clear();
-        footerLayout.ColumnStyles.Add(new(SizeType.Percent,100)); footerLayout.ColumnStyles.Add(new(SizeType.AutoSize)); footerLayout.ColumnStyles.Add(new(SizeType.AutoSize));
-        footerLayout.SetColumn(stopButton,2); footerLayout.Controls.Add(operationPercentLabel,1,0); footerLayout.SetColumnSpan(operationProgress,3);
-        help.SetToolTip(operationPercentLabel,"Completed actions plus supported native command/package progress. This is work progress, not an estimate of remaining time; unknown phases use animation.");
+        InitializeFooterControls();
         NormalizeSpacing();
     }
     private static RoundedButton ActionButton(string name,string text,UiIcon icon) => new()
@@ -117,7 +114,7 @@ public partial class Form1
         foreach (DarkGridHost host in Theme.Descendants(pageHost).OfType<DarkGridHost>())
             host.Margin = host.Parent is TableLayoutPanel table && table.GetRow(host) < table.RowCount-1 ? new(0,0,0,UiPalette.SectionGap) : Padding.Empty;
         activitySearchBox.Size = new(230,UiPalette.FieldHeight);
-        operationPercentLabel.Margin = new(8,0,12,4);
+        operationPercentLabel.Margin = Padding.Empty;
     }
     private void RefreshPreferenceFilter()
     {
@@ -160,9 +157,9 @@ public partial class Form1
     }
     private void RefreshProgressDisplay()
     {
-        operationPercentLabel.Text = workProgress.Caption;
-        operationProgress.Style = workProgress.IsIndeterminate ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous;
-        operationProgress.Maximum = 1000; operationProgress.Value = (int)Math.Clamp(Math.Round((workProgress.Percent ?? 0)*10),0,1000);
+        operationPercentLabel.Text = FooterProgressActive && workProgress.Percent.HasValue ? workProgress.Caption : "0%";
+        operationProgress.Style = FooterProgressActive && workProgress.IsIndeterminate ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous;
+        operationProgress.Maximum = 1000; operationProgress.Value = (int)Math.Clamp(Math.Round((FooterProgressActive ? workProgress.Percent ?? 0 : 0)*10),0,1000);
     }
     private void ReportRunProgress(RunProgress progress)
     {
@@ -207,6 +204,7 @@ public partial class Form1
         var protectedApp = new OptionalAppRow(new OptionalApp("Framework fixture","fixture","fixture","fixture","1",Protected:true));
         protectedApp.Selected = true; if (protectedApp.Selected) issues.Add("Protected installed applications can be selected.");
         issues.AddRange(VerifyMaintenanceFixtures());
+        issues.AddRange(VerifyFooterStateFixtures());
         return issues;
     }
     internal IEnumerable<string> VerifyPageAlignment()
@@ -225,5 +223,6 @@ public partial class Form1
         foreach (DetailListPanel list in Theme.Descendants(pageHost).OfType<DetailListPanel>().Where(list => list.Visible))
             foreach (string issue in list.VerifyRows()) yield return issue;
         foreach (string issue in VerifyMaintenancePageExtent()) yield return issue;
+        foreach (string issue in VerifyFooterLayout()) yield return issue;
     }
 }

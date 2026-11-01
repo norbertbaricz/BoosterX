@@ -72,7 +72,6 @@ partial class Form1
         pageHost = new BufferedPanel();
         saveLogButton = new RoundedButton();
         footerLayout = new BufferedTableLayoutPanel();
-        statusLabel = new Label();
         stopButton = new RoundedButton();
         operationProgress = new DarkProgressBar();
         activityTimer = new System.Windows.Forms.Timer(components);
@@ -460,7 +459,7 @@ partial class Form1
         versionLabel.TabIndex = 17;
         versionLabel.AutoSize = true;
         versionLabel.Dock = DockStyle.None;
-        versionLabel.Text = "4.9.2 · Portable edition\nReview changes before applying.";
+        versionLabel.Text = "4.9.4 · Portable edition\n" + UiLayout.AttributionText;
         versionLabel.Margin = new Padding(0, 14, 0, 0);
         versionLabel.UseMnemonic = false;
         versionLabel.MaximumSize = new Size(156, 0);
@@ -488,21 +487,11 @@ partial class Form1
         footerLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         footerLayout.Margin = new Padding(0);
         footerLayout.ColumnCount = 2;
-        footerLayout.RowCount = 3;
+        footerLayout.RowCount = 2;
         footerLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         footerLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         footerLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         footerLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 0F));
-        footerLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 6F));
-        statusLabel.Name = "statusLabel";
-        statusLabel.TabIndex = 26;
-        statusLabel.AutoSize = true;
-        statusLabel.AutoEllipsis = true;
-        statusLabel.Dock = DockStyle.Fill;
-        statusLabel.Text = "Ready. Analyze your PC or review a plan.";
-        statusLabel.Margin = new Padding(0, 7, 16, 7);
-        statusLabel.UseMnemonic = false;
-        statusLabel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
         stopButton.Name = "stopButton";
         stopButton.TabIndex = 27;
         stopButton.AutoSize = true;
@@ -523,7 +512,6 @@ partial class Form1
         operationProgress.Minimum = 0;
         operationProgress.Maximum = 100;
         operationProgress.Style = ProgressBarStyle.Continuous;
-        footerLayout.SetColumnSpan(operationProgress, 2);
         activityTimer.Interval = 200;
         overviewPage.Name = "overviewPage";
         overviewPage.TabIndex = 29;
@@ -1780,9 +1768,7 @@ partial class Form1
         bodyLayout.Controls.Add(navigationPanelScrollHost, 0, 0);
         bodyLayout.Controls.Add(pageHost, 1, 0);
         rootLayout.Controls.Add(bodyLayout, 0, 1);
-        footerLayout.Controls.Add(statusLabel, 0, 0);
         footerLayout.Controls.Add(stopButton, 1, 0);
-        footerLayout.Controls.Add(operationProgress, 0, 2);
         rootLayout.Controls.Add(footerLayout, 0, 2);
         overviewPage.Controls.Add(overviewTitleLabel, 0, 0);
         overviewPage.Controls.Add(overviewDescriptionLabel, 0, 1);
@@ -2327,7 +2313,6 @@ partial class Form1
     private Panel pageHost;
     private RoundedButton saveLogButton;
     private TableLayoutPanel footerLayout;
-    private Label statusLabel;
     private RoundedButton stopButton;
     private DarkProgressBar operationProgress;
     private System.Windows.Forms.Timer activityTimer;

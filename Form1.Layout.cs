@@ -147,25 +147,7 @@ public partial class Form1
             headerLayout.RowStyles[1].SizeType = header.Stacked ? SizeType.AutoSize : SizeType.Absolute;
             headerLayout.RowStyles[1].Height = 0;
             headerToolsFlow.Margin = new Padding(0, header.Stacked ? gap : 0, gap, 0);
-            stopButton.Visible = !layout.ShortHeight;
-            string stopText = layout.ShowBrandLabel ? UiLayout.StopText : UiLayout.CompactStopText;
-            if (stopButton.Text != stopText)
-            {
-                stopButton.MinimumSize = Size.Empty;
-                stopButton.Text = stopText;
-            }
-            bool footerStack = layout.StackedFooter || layout.ShortHeight;
-            footerLayout.SetColumnSpan(statusLabel, footerStack ? 2 : 1);
-            footerLayout.SetCellPosition(operationPercentLabel,new TableLayoutPanelCellPosition(footerStack ? 2 : 1,0));
-            footerLayout.SetCellPosition(stopButton, new TableLayoutPanelCellPosition(footerStack ? 0 : 2, footerStack ? 1 : 0));
-            footerLayout.SetColumnSpan(stopButton, footerStack ? 3 : 1);
-            footerLayout.RowStyles[1].SizeType = footerStack && !layout.ShortHeight ? SizeType.AutoSize : SizeType.Absolute;
-            footerLayout.RowStyles[1].Height = 0;
-            statusLabel.Margin = new Padding(0, 0, footerStack ? 0 : gap, LogicalToDeviceUnits(4));
-            int statusWidth = Math.Max(1, ClientSize.Width - Padding.Horizontal - statusLabel.Margin.Horizontal
-                - operationPercentLabel.GetPreferredSize(Size.Empty).Width - operationPercentLabel.Margin.Horizontal
-                - (footerStack ? 0 : stopButton.GetPreferredSize(Size.Empty).Width));
-            statusLabel.MaximumSize = new Size(statusWidth, Math.Max(1, statusLabel.Font.Height * (layout.ShortHeight ? 1 : 2)));
+            LayoutFooter(Math.Max(1,ClientSize.Width-Padding.Horizontal),layout.ShowBrandLabel);
             ResizeNavigation();
             foreach (FlowLayoutPanel flow in Theme.Descendants(pageHost).OfType<FlowLayoutPanel>()) ConstrainFlow(flow);
         }

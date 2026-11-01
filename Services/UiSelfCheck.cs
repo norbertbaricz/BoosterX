@@ -40,6 +40,7 @@ internal static class UiSelfCheck
                         {
                             form.SelectLayoutPage(page);
                             form.SetRepairLayoutCheck(query);
+                            form.SetFooterLayoutCheck(results.Count % 4);
                             form.PerformLayout();
                             await Task.Delay(UiPalette.UiCheckSettleMilliseconds); // Yield to queued viewport layout and the native message loop.
                             string[] issues = FindLayoutIssues(form).Concat(FindHeaderIssues(form)).Concat(FindVisualIssues(form)).Concat(form.VerifyPageAlignment()).ToArray();

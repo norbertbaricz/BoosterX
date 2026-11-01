@@ -29,6 +29,7 @@ internal static class UiLayout
     internal const int CaptionWidth = 40;
     internal const int CompactCaptionWidth = 32;
     internal const int BodyGap = 8;
+    internal const string AttributionText = "Made by Skypixel Framework";
     internal const string StopText = "Stop after current action";
     internal const string CompactStopText = "Stop after action";
 }

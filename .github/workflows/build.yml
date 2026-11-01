@@ -1,0 +1,62 @@
+name: Build and verify BoosterX WinForms
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  core-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+      - run: dotnet run --project tests/BoosterX.Verification -c Release
+
+  windows-build:
+    needs: core-checks
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        rid: [win-x64, win-arm64]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+      - name: Verify root developer project
+        run: dotnet build BoosterX.csproj -c Release
+      - name: Publish portable WinForms application
+        run: dotnet publish BoosterX.csproj -c Release -p:PublishProfile=Portable-${{ matrix.rid }}
+      - name: Control rendering, dropdown and scrolling regression checks
+        if: matrix.rid == 'win-x64'
+        run: dotnet run --project tests/BoosterX.RenderingChecks -c Release -- artifacts/RenderingChecks
+      - name: Native and WinForms geometry checks
+        if: matrix.rid == 'win-x64'
+        shell: pwsh
+        run: |
+          foreach ($mode in @('--self-check', '--ui-check')) {
+            $result = Start-Process ./artifacts/win-x64/BoosterX.exe -ArgumentList $mode -Wait -PassThru
+            if ($result.ExitCode -ne 0) { throw "$mode failed with exit code $($result.ExitCode)" }
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BoosterX-${{ matrix.rid }}
+          path: artifacts/${{ matrix.rid }}/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.rid == 'win-x64'
+        with:
+          name: BoosterX-windows-check-reports
+          path: |
+            ~/AppData/Local/BoosterX/SelfCheck/latest.json
+            ~/AppData/Local/BoosterX/UiCheck/latest.json
+            ~/AppData/Local/BoosterX/UiCheck/*.png
+            artifacts/RenderingChecks/
+          if-no-files-found: warn

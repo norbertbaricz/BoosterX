@@ -1,4 +1,4 @@
-# Native Windows acceptance for BoosterX 4.9.2
+# Native Windows acceptance for BoosterX 4.9.4
 
 Use isolated Windows 10 (19041+) and Windows 11 installations. Record OS build,
 architecture, user/admin identity, work area, DPI, result and restore outcome.
@@ -151,3 +151,21 @@ $result.ExitCode
 - Repeat startup disable/restore, protected entries, high-performance AC/battery
   behavior, legacy service recovery, close-while-busy and original typed restore.
   Benchmark the same workload/conditions before and after changes.
+
+## Full-width footer acceptance
+
+- The rounded progress panel must fill the available row beside Stop, align with
+  the footer's left edge and use the same right edge as Stop. Inspect equal inner
+  insets, a consistent action gap and shared vertical centers at every tested DPI.
+  At very small widths it may use two rows, with the progress panel filling its row.
+- Idle must be an empty track at 0%, including first launch and after completed,
+  failed or stopped work. Start another operation and check no old percentage
+  appears. Finished results must remain in Activity/History.
+- Test known native progress and unknown phases. Values must reflect actual work;
+  unknown duration uses animation at 0% until measured progress arrives. Do not
+  infer elapsed-time progress or success from a filled bar alone.
+- The native fixture checks idle, unknown, 37%/37.5%-fill and 100% states, then
+  resets to empty. The 143-case page/size matrix cycles those states and verifies
+  bounds/insets/full width/centers. It also checks Made by Skypixel Framework.
+- No permanent status label may return. Hover progress for the latest status;
+  the existing logs/results and Stop behavior must remain available.

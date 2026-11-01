@@ -20,6 +20,7 @@
     <Compile Include="Program.cs;Theme.cs;UiModels.cs;GlobalUsings.cs;Controls/**/*.cs;Services/**/*.cs" />
     <Compile Include="Form1.cs"><SubType>Form</SubType></Compile>
     <Compile Include="Form1.Layout.cs"><DependentUpon>Form1.cs</DependentUpon></Compile>
+    <Compile Include="Form1.Footer.cs"><DependentUpon>Form1.cs</DependentUpon></Compile>
     <Compile Include="Form1.Icons.cs"><DependentUpon>Form1.cs</DependentUpon></Compile>
     <Compile Include="Form1.Features.cs"><DependentUpon>Form1.cs</DependentUpon></Compile>
     <Compile Include="Form1.Maintenance.cs"><DependentUpon>Form1.cs</DependentUpon></Compile>

@@ -1,4 +1,4 @@
-BoosterX 4.9.2 — C# / .NET 10 Windows Forms / Form1
+BoosterX 4.9.4 — C# / .NET 10 Windows Forms / Form1
 
 WINDOWS SOURCE START
 Extract the source ZIP. Open the BoosterX folder containing BoosterX.csproj.
@@ -7,6 +7,14 @@ dotnet run
 PORTABLE START
 Extract the full ZIP. Start Portable/win-x64/BoosterX.exe on Intel/AMD Windows,
 or Portable/win-arm64/BoosterX.exe on ARM64. The runtime is included.
+
+FOOTER
+The rounded progress panel fills the footer space beside Stop after current
+action, with a fixed percentage column and equal outer insets. Idle means an
+empty track and 0%. Operations start fresh and use reported work/native progress;
+unknown phases animate at 0% until a real percentage is available. Success, errors
+and cancellation all return the footer to idle; results remain in Activity and
+History. Hover progress for the latest status. Sidebar: Made by Skypixel Framework.
 
 CLEANUP
 Scan cleanup areas automatically checks all 22 fixed catalog areas. There is no

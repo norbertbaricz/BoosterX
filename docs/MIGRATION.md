@@ -1,4 +1,4 @@
-# BoosterX 4.9.2 migration
+# BoosterX 4.9.4 migration
 
 Existing 4.x data directory, settings fields, journal format 1, stable optimization
 IDs and reverse restoration order remain. Startup handling and the accepted
@@ -43,3 +43,15 @@ eligible files before the existing confirmed deletion path.
 Repairs retains its actions. DarkScrollPanel no longer feeds content.Height
 back into measurement; natural-height tables use preferred content height.
 DetailListPanel caches measured placements, with width/DPI/content invalidation.
+
+In 4.9.3 only footer presentation changes. The old status Label is no longer
+constructed. SetStatus updates progress tooltips/accessibility instead; operation
+log/engine calls are retained. Form1.Footer.cs owns the compact dark panel and
+measured responsive layout. Progress painting and all Windows services remain.
+
+In 4.9.4 the footer progress column fills remaining row width; Stop keeps its
+measured width. RunBusyAsync resets only transient footer progress in finally;
+engine/journal records remain. Sidebar attribution is a UiLayout constant.
+Native check mode can exercise four isolated footer states without Windows
+optimization operations. OperationProgress itself and native command handling
+are unchanged.

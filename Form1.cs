@@ -211,7 +211,7 @@ public partial class Form1 : DarkForm
         });
         cleanupGrid.DataSource = temporaryFiles;
         temporaryFiles.ReplaceWith(Enumerable.Range(1,30).Select(i => new TempRow(new TempCandidate(@"C:\Fixture\Temp",@"C:\Fixture\Temp\cached-file-"+i+".tmp",1024*i,DateTime.UtcNow.AddDays(-14),DateTime.UtcNow.AddDays(-20),"Fixture cache area"))));
-        workProgress.SetSteps(1,4); workProgress.SetStepPercent(50); RefreshProgressDisplay();
+        SetFooterLayoutCheck(0);
         FlushLog();
     }
 
@@ -277,12 +277,11 @@ public partial class Form1 : DarkForm
         }
         finally
         {
-            operationProgress.Style = ProgressBarStyle.Continuous;
-            operationPercentLabel.Text = workProgress.Percent.HasValue ? workProgress.Caption : "—";
             SetPageActionsEnabled(true);
             elevateButton.Enabled = !ElevationService.IsAdministrator;
             stopButton.Enabled = false;
             busy = false;
+            workProgress.Reset(); RefreshProgressDisplay();
             try { RefreshHistory(); } catch (Exception ex) { WriteLog("History could not be read: " + ex.Message); }
         }
     }
@@ -606,8 +605,7 @@ public partial class Form1 : DarkForm
     });
     private void SetStatus(string message)
     {
-        statusLabel.Text = message.Length <= 180 ? message : message[..177] + "…";
-        help.SetToolTip(statusLabel, message);
+        UpdateFooterStatus(message);
     }
     private void SaveText(string text, string filename)
     {

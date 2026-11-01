@@ -45,6 +45,12 @@ internal static class UiPalette
     internal const int FocusCueInset = 4;
     internal const int CaptionGlyphSize = 10;
     internal const int ProgressHeight = 6;
+    // Footer dimensions are logical pixels; the track fills remaining width and scales with DPI.
+    internal const int FooterProgressTrackMinimumWidth = 64;
+    internal const int FooterCaptionMinimumWidth = 52;
+    internal const int FooterProgressInset = 12;
+    internal const int FooterProgressInnerGap = 12;
+    internal const int FooterStackGap = 8;
     internal const int ScrollBarWidth = 10;
     internal const int ScrollBarGap = 4;
     internal const int MinimumThumb = 28;

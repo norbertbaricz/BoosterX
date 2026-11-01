@@ -1,0 +1,5 @@
+Microsoft.Windows.SDK.NET.Ref 10.0.19041.57
+Copyright Microsoft Corporation. All rights reserved.
+License URL supplied by the original NuGet package: https://aka.ms/WinSDKLicenseURL
+Project URL: https://aka.ms/WinSDKProjectURL
+The included metadata preserves the package licensing information.
